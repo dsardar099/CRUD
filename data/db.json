@@ -1,0 +1,60 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Dwaipayan Sardar",
+      "roll": "180416",
+      "loc": "Basirhat",
+      "course": "BSC Hons. Computer Science",
+      "grade": "9.4",
+      "comment": "Hello! I am Dwaipayan Sardar, a professional Web Developer using React technologies. I also know HTML, CSS, JAVASCRIPT, JQUERY, AJAX, PHP MYSQL, BOOTSTRAP, NODE and much more. I always try to learn from any failure and from my works. Thanks all for visiting my profile.",
+      "ph": "8327423344",
+      "email": "dsardar099@gmail.com",
+      "adm": "2018",
+      "pass": "2021",
+      "dev": "Web Developer"
+    },
+    {
+      "id": 2,
+      "name": "Sounak Das",
+      "roll": "180413",
+      "loc": "Machlandapur",
+      "course": "BSC Hons. Computer Science",
+      "grade": "9.2",
+      "comment": "Hello! I am Sounak Das, a professional App Developer using Angular Js technologies. I also know HTML, CSS, JAVASCRIPT, JQUERY, AJAX, PHP MYSQL, BOOTSTRAP, NODE and much more. I always try to learn from any failure and from my works. Thanks all for visiting my profile.",
+      "ph": "8327423423",
+      "email": "sounakdas@gmail.com",
+      "adm": "2018",
+      "pass": "2021",
+      "dev": "App Developer"
+    },
+    {
+      "id": 3,
+      "name": "Nabakumar Gain",
+      "roll": "180451",
+      "loc": "Malatipur",
+      "course": "BSC Hons. Computer Science",
+      "grade": "9.0",
+      "comment": "Hello! I am Nabakumar Gain, a professional Web Developer using PHP technologies. I also know HTML, CSS, JAVASCRIPT, JQUERY, AJAX, PHP MYSQL, BOOTSTRAP, NODE and much more. I always try to learn from any failure and from my works. Thanks all for visiting my profile.",
+      "ph": "8327420025",
+      "email": "nkgain@gmail.com",
+      "adm": "2018",
+      "pass": "2021",
+      "dev": "Web Developer"
+    },
+    {
+      "id": 4,
+      "name": "Akash Mondal",
+      "roll": "180426",
+      "loc": "Harua",
+      "course": "BSC Hons. Computer Science",
+      "grade": "9.0",
+      "comment": "Hello! I am Akash Mondal, a professional Wordpress Developer using React technologies. I also know HTML, CSS, JAVASCRIPT, JQUERY, AJAX, PHP MYSQL, BOOTSTRAP, NODE and much more. I always try to learn from any failure and from my works. Thanks all for visiting my profile.",
+      "ph": "8327421234",
+      "email": "akashmondal@gmail.com",
+      "adm": "2018",
+      "pass": "2021",
+      "dev": "Wordpress Developer"
+    }
+  ]
+}

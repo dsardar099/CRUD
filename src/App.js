@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { useEffect } from "react";
+
+
+import Header from "./Header";
+
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./App.css";
+import Unknown from "./Unknown";
+import View from "./View";
+import Profile from "./Profile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route exact path={["/", "/students"]}>
+            <View />
+          </Route>
+          <Route path="/profile/:id">
+            <Profile />
+          </Route>
+          <Route path="*">
+            <Unknown />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
