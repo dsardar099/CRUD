@@ -2,11 +2,30 @@ import { useHistory } from "react-router-dom";
 import useFetch from "./useFetch";
 import Error from "./Error";
 import Loading from "./Loading";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 const View = () => {
   const [reload, setReload] = useState(false);
 
+  const [btnType, setBtnType] = useState(null);
+
+  const [alert, setAlert] = useState(null);
+  const [alertType, setAlertType] = useState(null);
+
+  const { data, isPending, error } = useFetch(
+    "http://localhost:8000/students",
+    reload
+  );
+
+  const [stdData,setStdData] = useState(null);
+
+  useEffect(() => {
+
+    setStdData(data);
+
+  },[data]);
+
+  // console.log(typeof(stdData));
 
   const initialDetails = {
     id: null,
@@ -25,12 +44,64 @@ const View = () => {
 
   const [uStdData, setUStdData] = useState(initialDetails);
 
+  const checkDuplicate = (id) => {
+    for (let i = 0; i < stdData.length; i++) {
+      if (
+        (stdData[i]["roll"] === uStdData["roll"] ||
+          stdData[i]["ph"] === uStdData["ph"] ||
+          stdData[i]["email"] === uStdData["email"]) &&
+        stdData[i]["id"] !== id
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUStdData({ ...uStdData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSearch = (e) => {
+    
+    const { name, value } = e.target;
+    let filteredData=[];
+    for(let i=0;i<data.length;i++){
+      let std=data[i];
+      if(std['name'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['roll'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['loc'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['course'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['ph'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['email'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['adm'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['pass'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+      else if(std['dev'].toLowerCase().indexOf(value.toLowerCase())===0){
+        filteredData.push(std);
+      }
+    }
+    setStdData(filteredData);
+    // setStdData(stdData.filter((std) => std.name === value ))
+  };
+
+  const handleAdd = (e) => {
     var form = document.querySelector(".needs-validation");
     form.addEventListener(
       "submit",
@@ -44,30 +115,73 @@ const View = () => {
           event.stopPropagation();
           form.classList.add("was-validated");
           // console.log(uStdData);
-          fetch("http://localhost:8000/students/" + uStdData.id, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(uStdData)
-          })
-          .then(res => res.json())
-          .then((results) => {
-              setUStdData(initialDetails);
-              history.push("/");
-              setReload(reload === false ? true : false);
-              window.location.reload();
-            });
+          if (!checkDuplicate(-1)) {
+            fetch("http://localhost:8000/students/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(uStdData),
+            })
+              .then((res) => res.json())
+              .then((results) => {
+                setAlert("Successfully Added");
+                setAlertType("Hurray");
+                setUStdData(initialDetails);
+                history.push("/");
+                setReload(reload === false ? true : false);
+                window.location.reload();
+              });
+          } else {
+            setAlert("Duplicate Entry");
+            setAlertType("Error");
+          }
         }
       },
       false
     );
   };
 
-  const { data: stdData, isPending, error } = useFetch(
-    "http://localhost:8000/students",
-    reload
-  );
+  const handleUpdate = (e) => {
+    var form = document.querySelector(".needs-validation");
+    form.addEventListener(
+      "submit",
+      function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add("was-validated");
+        } else {
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add("was-validated");
+          // console.log(uStdData);
+          if (!checkDuplicate(uStdData.id)) {
+            fetch("http://localhost:8000/students/" + uStdData.id, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(uStdData),
+            })
+              .then((res) => res.json())
+              .then((results) => {
+                setAlert("Update Success");
+                setAlertType("Hurray");
+                setUStdData(initialDetails);
+                history.push("/");
+                setReload(reload === false ? true : false);
+                window.location.reload();
+              });
+          } else {
+            setAlert("Duplicate Entry");
+            setAlertType("Error");
+          }
+        }
+      },
+      false
+    );
+  };
 
   const history = useHistory();
 
@@ -82,8 +196,16 @@ const View = () => {
   };
 
   const handleEdit = (id) => {
+    setAlert(null);
     const editStd = stdData.filter((s) => s.id === id);
     setUStdData(editStd[0]);
+    setBtnType("Update");
+  };
+
+  const handleCreate = () => {
+    setAlert(null);
+    setUStdData(initialDetails);
+    setBtnType("Add");
   };
 
   const handleView = (id) => {
@@ -110,6 +232,7 @@ const View = () => {
                   <h5 className="modal-title h4" id="editModalLabel">
                     Edit Student Data
                   </h5>
+
                   <button
                     type="button"
                     className="btn-close"
@@ -119,6 +242,26 @@ const View = () => {
                 </div>
                 <div className="modal-body">
                   <div className="continer-fluid">
+                    <div className="row justify-content-center">
+                      <div className="col-auto">
+                        {alert && (
+                          <div className="mb-3">
+                            <div
+                              className="alert alert-info alert-dismissible fade show"
+                              role="alert"
+                            >
+                              <strong>{alertType}!</strong> {alert}
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     <form className="row g-3 needs-validation" noValidate>
                       <div className="col-md-4">
                         <label htmlFor="name" className="form-label h6">
@@ -290,13 +433,33 @@ const View = () => {
                         <div className="invalid-feedback">Required!</div>
                       </div>
 
+                      <div className="col-md-12">
+                        <label htmlFor="comment" className="form-label h6">
+                          Comment
+                        </label>
+                        <textarea
+                          type="number"
+                          className="form-control"
+                          id="comment"
+                          name="comment"
+                          value={uStdData.comment}
+                          onChange={handleInputChange}
+                          rows="4"
+                          required
+                        />
+                        <div className="valid-feedback">Looks good!</div>
+                        <div className="invalid-feedback">Required!</div>
+                      </div>
+
                       <div className="col-12 text-center">
                         <button
                           className="btn btn-primary"
                           type="submit"
-                          onClick={handleSubmit}
+                          onClick={
+                            btnType === "Update" ? handleUpdate : handleAdd
+                          }
                         >
-                          Update
+                          {btnType}
                         </button>
                       </div>
                     </form>
@@ -316,7 +479,30 @@ const View = () => {
           </div>
 
           <div className="container">
-            <div className="row py-3 py-md-5">
+            <div className="row pt-3 justify-content-between">
+              <div className="col-6 col-md-auto">
+                <button
+                  className="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal"
+                  onClick={handleCreate}
+                >
+                  New Student
+                </button>
+              </div>
+
+              <div className="col-6 col-md-auto">
+                <input
+                  className="form-control me-2 border border-secondary border-3"
+                  name="search"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  onChange={handleSearch}
+                />
+              </div>
+            </div>
+            <div className="row py-3 pb-md-5">
               <div className="col-12 overflow-auto">
                 <table className="table table-light table-striped table-hover">
                   <thead>

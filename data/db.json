@@ -55,6 +55,34 @@
       "adm": "2018",
       "pass": "2021",
       "dev": "Wordpress Developer"
+    },
+    {
+      "id": 5,
+      "name": "Amit Kumar Modak",
+      "roll": "180430",
+      "loc": "Gobordanga",
+      "course": "BSC Hons. Computer Science",
+      "grade": "9.2",
+      "comment": "Hello! I am Amit Kumar Modak, a professional Web Developer using React technologies. I also know HTML, CSS, JAVASCRIPT, JQUERY, AJAX, PHP MYSQL, BOOTSTRAP, NODE and much more. I always try to learn from any failure and from my works. Thanks all for visiting my profile.",
+      "ph": "8327425589",
+      "email": "amit@gmail.com",
+      "adm": "2018",
+      "pass": "2021",
+      "dev": "Web Developer"
+    },
+    {
+      "id": 6,
+      "name": "Archisman Adhikary",
+      "roll": "180420",
+      "loc": "Babughat",
+      "course": "BSC Hons. Computer Science",
+      "grade": "9.5",
+      "comment": "Hello! I am Archisman Adhikary, a professional App Developer using React technologies. I also know HTML, CSS, JAVASCRIPT, JQUERY, AJAX, PHP MYSQL, BOOTSTRAP, NODE and much more. I always try to learn from any failure and from my works. Thanks all for visiting my profile.",
+      "ph": "1234567890",
+      "email": "archi@gmail.com",
+      "adm": "2018",
+      "pass": "2021",
+      "dev": "App Developer"
     }
   ]
 }
